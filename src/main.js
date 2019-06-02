@@ -1,5 +1,6 @@
 import 'amfe-flexible';
 import Vue from 'vue';
+import Hello from '@/components/Hello';
 // By default we import all the components.
 // Only reserve the components on demand and remove the rest.
 // Style is always required.
@@ -48,6 +49,7 @@ import {
   ScrollNav,
   ScrollNavBar,
   RecycleList,
+  createAPI,
 } from 'cube-ui';
 import App from './App';
 import router from './router';
@@ -92,6 +94,7 @@ Vue.use(ScrollNavBar);
 Vue.use(RecycleList);
 
 Vue.config.productionTip = false;
+createAPI(Vue, Hello, ['click'], true);
 
 /* eslint-disable no-new */
 new Vue({

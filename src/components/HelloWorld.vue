@@ -243,6 +243,7 @@
       },
       // 手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
       gotouchend (item) {
+        console.log('end')
         clearTimeout(this.timeOutEvent)
         if (this.timeOutEvent !== 0) {
           if (item.status === '1') {
@@ -313,7 +314,8 @@
         this.selectedId = item.id
         if (item.status === '1') {
           this.$refs.contentScroll.disable()
-          this.$refs.popup.show()
+          this.showHello(item)
+          // this.$refs.popup.show()
         }
       },
       popHide (e) {
@@ -351,26 +353,21 @@
             if (e.target.tagName.toUpperCase() === 'A') {
               this.deleteDialog(item.id)
             }
-          }
+          },
         }).show()
-      }
-    },
-    beforeRouteEnter (to, from, next) {
-      if (from.name === 'recheck-apply-detail') {
-        next()
-      } else {
-        sessionStorage.removeItem('currPage')
-        sessionStorage.removeItem('currStatus')
-        next()
-      }
-    },
-    beforeRouteLeave (to, from, next) {
-      if (to.name === 'recheck-apply-detail') {
-        sessionStorage.setItem('currPage', this.params.page)
-        sessionStorage.setItem('currStatus', this.params.status)
-        next()
-      } else {
-        next()
+      },
+      showHello(item) {
+        // 直接调用
+        // 传入配置对象，默认传入的所有对象全都当做 props 传入组件
+        // 除了在调用 createAPI 的时候传入了 events，这里对应的就是
+        // on{event name} 会被当做事件回调处理
+        const instance = this.$createHello({
+          content: 'My Hello Content',
+          refName: 'mypop',
+          itemId: item.id,
+        })
+        instance.$refs.mypop.show()
+        this.$refs.contentScroll.enable()
       }
     },
     watch: {
